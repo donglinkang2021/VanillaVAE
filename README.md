@@ -11,7 +11,7 @@ Minimal Autoencoder implementation in PyTorch.
 
 1. Clone the repository:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/donglinkang2021/VanillaVAE.git
     cd VanillaVAE
     ```
 
