@@ -20,14 +20,14 @@ class VariationalEncoder(nn.Module):
         super(VariationalEncoder, self).__init__()
         self.fc = nn.Linear(28 * 28, 512)
         self.mu = nn.Linear(512, latent_dims)
-        self.log_std = nn.Linear(512, latent_dims)
+        self.log_var = nn.Linear(512, latent_dims)
 
     def forward(self, x):
         x = torch.flatten(x, start_dim=1)
         x = F.relu(self.fc(x))
-        mu =  self.mu(x)
-        log_std = self.log_std(x)
-        return mu, log_std
+        mu = self.mu(x)
+        log_var = self.log_var(x)
+        return mu, log_var
     
 class Decoder(nn.Module):
     def __init__(self, latent_dims):
@@ -66,17 +66,18 @@ class VariationalAutoEncoder(AutoEncoder):
     def __init__(self, latent_dims):
         super(VariationalAutoEncoder, self).__init__(latent_dims)
         self.encoder = VariationalEncoder(latent_dims)
+        self.kl_ratio = latent_dims / (28 * 28) # IMPORTANT: Adjust KL divergence loss to each pixel
 
-    def reparameterize(self, mu: torch.Tensor, log_std: torch.Tensor) -> torch.Tensor:
-        std = torch.exp(log_std)
+    def reparameterize(self, mu: torch.Tensor, log_var: torch.Tensor) -> torch.Tensor:
+        std = 0.5 * torch.exp(log_var)
         eps = torch.randn_like(std)
         return mu + eps * std
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:
-        mu, log_std = self.encode(input)
-        z = self.reparameterize(mu, log_std)
+        mu, log_var = self.encode(input)
+        z = self.reparameterize(mu, log_var)
         x_recon = self.decode(z)
-        kl_loss = (mu**2 + torch.exp(2*log_std) - log_std - 0.5).sum()
-        recon_loss = F.mse_loss(x_recon, input, reduction='sum')
-        loss = recon_loss + kl_loss
+        kl_loss = 0.5 * (mu**2 + log_var.exp() - log_var - 1).mean()
+        recon_loss = F.mse_loss(x_recon, input)
+        loss = recon_loss + kl_loss * self.kl_ratio
         return loss
