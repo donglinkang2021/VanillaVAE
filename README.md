@@ -75,6 +75,7 @@ $\{x\}$ represents our image data samples, and $X$ represents the image variable
 Our goal in training the VAE is to minimize the difference between the original image and the reconstructed image, while using KL divergence to constrain the distribution of $Z$ to be close to a standard normal distribution.
 
 The probability density function of a normal distribution $\mathcal{N}(\mu, \sigma^2)$ is:
+
 $$
 p(z) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(z-\mu)^2}{2\sigma^2}\right) \\
 \log p(z) = -\frac{1}{2}\log(2\pi\sigma^2) - \frac{(z-\mu)^2}{2\sigma^2}
@@ -85,14 +86,11 @@ Our neural network, after the Encoder part, actually outputs `mu` $\mu$ and `log
 When calculating the KL divergence, we need to calculate the KL divergence between two normal distributions $p\sim \mathcal{N}(\mu, \sigma)$ and $q\sim \mathcal{N}(0,1)$:
 
 $$
-\begin{align}
-KL(p(z), q(z))
-&= \int p(z) \log\left(\frac{p(z)}{q(z)}\right) dz \\ 
-
-\end{align}
+KL(p(z), q(z)) = \int p(z) \log\left(\frac{p(z)}{q(z)}\right) dz
 $$
 
 Then we have
+
 $$
 \log q(z) = -\frac{1}{2}\log(2\pi) - \frac{z^2}{2}
 $$
@@ -121,6 +119,7 @@ KL(p(z), q(z)) &= \int p(z) \log\left(\frac{p(z)}{q(z)}\right) dz \\
 $$
 
 So in the code, it can usually be written in one line:
+
 ```python
 kl_loss = 0.5 * (mu**2 + log_var.exp() - log_var - 1).mean()
 ```
