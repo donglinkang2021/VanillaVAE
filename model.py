@@ -69,7 +69,7 @@ class VariationalAutoEncoder(AutoEncoder):
         self.kl_ratio = latent_dims / (28 * 28) # IMPORTANT: Adjust KL divergence loss to each pixel
 
     def reparameterize(self, mu: torch.Tensor, log_var: torch.Tensor) -> torch.Tensor:
-        std = 0.5 * torch.exp(log_var)
+        std = torch.exp(0.5 * log_var)
         eps = torch.randn_like(std)
         return mu + eps * std
 
