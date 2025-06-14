@@ -36,7 +36,7 @@ def _test_vae():
     _test(model)
 
 def main():
-    _test_ae()
+    # _test_ae()
     _test_vae()
 
 if __name__ == "__main__":

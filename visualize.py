@@ -32,7 +32,7 @@ def _interpolate_vae():
     device = config.device
     model = VariationalAutoEncoder(latent_dims=2).to(device)
     model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
-    x_1, x_2 = get_two_images(7, 3)
+    x_1, x_2 = get_two_images(0, 9)
     interpolate_gif(model, x_1, x_2, num_steps=100, filename="plots/vae.gif")
 
 def main():
