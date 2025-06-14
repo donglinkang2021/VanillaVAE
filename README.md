@@ -5,7 +5,7 @@ Minimal Autoencoder implementation in PyTorch.
 | Model | Latent Space | Reconstructed Manifold | Interpolation Animation |
 | :---: | :----------: | :--------------------: | :---------------------: |
 | Autoencoder | ![Autoencoder Latent Space](plots/ae_latent_space.png) | ![Autoencoder Reconstructed Manifold](plots/ae_reconstructed_manifold.png) | ![Autoencoder Animation](plots/ae.gif)</br>*0→9* |
-| Variational Autoencoder | ![VAE Latent Space](plots/vae_latent_space.png) | ![VAE Reconstructed Manifold](plots/vae_reconstructed_manifold.png) | ![VAE Animation](plots/vae.gif) |
+| Variational Autoencoder | ![VAE Latent Space](plots/vae_latent_space.png) | ![VAE Reconstructed Manifold](plots/vae_reconstructed_manifold.png) | ![VAE Animation](plots/vae.gif)</br>*3→7* |
 
 ## Quick Start
 
