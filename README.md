@@ -77,8 +77,10 @@ Our goal in training the VAE is to minimize the difference between the original 
 The probability density function of a normal distribution $\mathcal{N}(\mu, \sigma^2)$ is:
 
 $$
-p(z) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(z-\mu)^2}{2\sigma^2}\right) \\
-\log p(z) = -\frac{1}{2}\log(2\pi\sigma^2) - \frac{(z-\mu)^2}{2\sigma^2}
+\begin{aligned}
+p(z) &= \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(z-\mu)^2}{2\sigma^2}\right) \\
+\log p(z) &= -\frac{1}{2}\log(2\pi\sigma^2) - \frac{(z-\mu)^2}{2\sigma^2}
+\end{aligned}
 $$
 
 Our neural network, after the Encoder part, actually outputs `mu` $\mu$ and `log_var` $\log \sigma^2$.
